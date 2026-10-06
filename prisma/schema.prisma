@@ -1,0 +1,122 @@
+// Flex database schema.
+// Entities model canonical products, their merchant listings (currently all
+// mocked — see lib/core/providers), and time-stamped snapshots so price/rating
+// history and caching TTLs work from day one.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Merchant {
+  AMAZON_IN
+  FLIPKART
+  MYNTRA
+}
+
+enum ReviewSentiment {
+  POSITIVE
+  NEGATIVE
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  brand         String
+  model         String
+  category      String
+  canonicalName String
+  createdAt     DateTime @default(now())
+
+  variants ProductVariant[]
+
+  @@index([canonicalName])
+}
+
+model ProductVariant {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  storageGb Int?
+  colorName String?
+  sizeLabel String?
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  listings   MerchantListing[]
+  aiSummary  AiReviewSummary?
+}
+
+model MerchantListing {
+  id          String   @id @default(cuid())
+  variantId   String
+  variant     ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  merchant    Merchant
+  redirectUrl String
+  isMocked    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  priceSnapshots  PriceSnapshot[]
+  ratingSnapshots RatingSnapshot[]
+  reviewSources   ReviewSource[]
+
+  @@unique([variantId, merchant])
+}
+
+model PriceSnapshot {
+  id          String   @id @default(cuid())
+  listingId   String
+  listing     MerchantListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  priceInPaise Int
+  inStock     Boolean  @default(true)
+  fetchedAt   DateTime @default(now())
+
+  @@index([listingId, fetchedAt])
+}
+
+model RatingSnapshot {
+  id          String   @id @default(cuid())
+  listingId   String
+  listing     MerchantListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  rating      Float
+  reviewCount Int
+  fetchedAt   DateTime @default(now())
+
+  @@index([listingId, fetchedAt])
+}
+
+model ReviewSource {
+  id        String          @id @default(cuid())
+  listingId String
+  listing   MerchantListing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  snippet   String
+  sentiment ReviewSentiment
+  createdAt DateTime        @default(now())
+
+  @@index([listingId])
+}
+
+model AiReviewSummary {
+  id               String   @id @default(cuid())
+  variantId        String   @unique
+  variant          ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  likes            String[]
+  complaints       String[]
+  verdict          String?
+  bestFor          String?
+  thinkTwiceIf     String?
+  insufficientData Boolean  @default(false)
+  fetchedAt        DateTime @default(now())
+}
+
+model SearchQuery {
+  id          String   @id @default(cuid())
+  queryText   String
+  matchedSlug String?
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+}

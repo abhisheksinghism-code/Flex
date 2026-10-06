@@ -30,8 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files — .env.example is intentionally committed, real env files never are
+.env
+.env.local
+.env.*.local
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +42,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/lib/generated/prisma
+
+# testing artifacts
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
