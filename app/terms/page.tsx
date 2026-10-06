@@ -2,8 +2,8 @@ export const metadata = { title: "Terms | Flex" };
 
 export default function TermsPage() {
   return (
-    <main className="mx-auto max-w-2xl space-y-4 px-4 py-16 text-sm leading-relaxed">
-      <h1 className="text-2xl font-semibold">Terms</h1>
+    <main className="mx-auto max-w-2xl space-y-4 px-6 py-16 text-sm leading-relaxed">
+      <h1 className="text-2xl font-semibold tracking-tight">Terms</h1>
       <ul className="list-disc space-y-2 pl-5">
         <li>Flex is provided &ldquo;as is,&rdquo; free of charge, with no guarantee of accuracy, availability, or uptime.</li>
         <li>Flex does not sell products. All purchases happen on the merchant&apos;s own website.</li>

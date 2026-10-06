@@ -2,8 +2,8 @@ export const metadata = { title: "Privacy | Flex" };
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-2xl space-y-4 px-4 py-16 text-sm leading-relaxed">
-      <h1 className="text-2xl font-semibold">Privacy</h1>
+    <main className="mx-auto max-w-2xl space-y-4 px-6 py-16 text-sm leading-relaxed">
+      <h1 className="text-2xl font-semibold tracking-tight">Privacy</h1>
       <p>Flex is free to use and doesn&apos;t require an account to search or compare prices.</p>
       <ul className="list-disc space-y-2 pl-5">
         <li>We don&apos;t require sign-up or login for basic product search.</li>

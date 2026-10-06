@@ -16,11 +16,9 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <main className="mx-auto flex max-w-xl flex-col items-center gap-4 px-4 py-24 text-center">
-      <h1 className="text-xl font-semibold">Something went wrong</h1>
-      <p className="text-muted-foreground">
-        That wasn&apos;t supposed to happen. Please try again.
-      </p>
+    <main className="mx-auto flex max-w-xl flex-col items-center gap-5 px-6 py-24 text-center">
+      <h1 className="text-xl font-semibold tracking-tight">We hit a snag</h1>
+      <p className="text-muted-foreground">Please try again.</p>
       <Button onClick={() => reset()}>Try again</Button>
     </main>
   );

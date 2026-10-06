@@ -26,25 +26,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <header className="border-b">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+        <header className="h-16">
+          <div className="mx-auto flex h-full max-w-5xl items-center px-6">
             <Link href="/" className="text-lg font-semibold tracking-tight">
               Flex
             </Link>
           </div>
         </header>
         <div className="flex-1">{children}</div>
-        <footer className="border-t">
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2 px-4 py-6 text-xs text-muted-foreground">
+        <footer>
+          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-8 text-xs text-muted-foreground">
             <p>Flex does not sell products. Purchases complete on the merchant&apos;s own site.</p>
             <nav className="flex gap-4">
-              <Link href="/disclaimer" className="hover:underline">
+              <Link href="/disclaimer" className="transition-colors hover:text-foreground">
                 Disclaimer
               </Link>
-              <Link href="/privacy" className="hover:underline">
+              <Link href="/privacy" className="transition-colors hover:text-foreground">
                 Privacy
               </Link>
-              <Link href="/terms" className="hover:underline">
+              <Link href="/terms" className="transition-colors hover:text-foreground">
                 Terms
               </Link>
             </nav>

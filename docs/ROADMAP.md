@@ -53,3 +53,9 @@
 - Optional accounts, saved products, watchlists.
 - Affiliate monetization — transparent to users, layered onto the real
   merchant integrations above once they exist.
+- **Authentication** (Google OAuth + mobile OTP) — deliberately not built as
+  part of the Phase 1 visual redesign. It's a new subsystem (sessions, a
+  user data model) with a real recurring cost (SMS OTP isn't free), and it
+  would also contradict the original "no login required for basic search"
+  requirement. If this is wanted, it should get its own scoping/design pass
+  rather than being bundled into a UI pass.

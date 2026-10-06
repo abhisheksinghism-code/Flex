@@ -9,6 +9,7 @@ import {
   type CompareViewModel,
   type ListingWithRedirect,
 } from "@/lib/db/cache";
+import { buildVariantLabel } from "@/lib/core/format";
 import type { MatchedVariantGroup, MerchantId, MerchantListingCandidate } from "@/lib/core/types";
 
 // One slow/broken provider must never take the whole comparison down with it.
@@ -96,7 +97,7 @@ export async function getOrBuildCompareView(
 
   if (!originalQuery) return null;
 
-  const { groups } = await computeGroups(originalQuery);
+  const { groups, unavailableMerchants } = await computeGroups(originalQuery);
   const group = groups.find((candidate) => candidate.slug === slug);
   if (!group) return null;
 
@@ -109,6 +110,13 @@ export async function getOrBuildCompareView(
   return {
     slug: group.slug,
     canonicalName: group.canonicalName,
+    productName: `${group.attributes.brand ?? ""} ${group.attributes.model}`.trim(),
+    variantLabel: buildVariantLabel(
+      group.attributes.storageGb,
+      group.attributes.colorName,
+      group.attributes.sizeLabel
+    ),
+    unavailableMerchants,
     listings: listings.map((listing) => ({
       merchant: listing.merchant,
       priceInPaise: listing.priceInPaise,

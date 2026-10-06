@@ -15,3 +15,13 @@ export function formatInr(priceInPaise: number): string {
     maximumFractionDigits: 0,
   }).format(priceInPaise / 100);
 }
+
+/** "256GB · Natural Titanium" — the variant specifics shown under the product name. */
+export function buildVariantLabel(
+  storageGb: number | null | undefined,
+  colorName: string | null | undefined,
+  sizeLabel: string | null | undefined
+): string | null {
+  const parts = [storageGb ? `${storageGb}GB` : null, colorName, sizeLabel].filter(Boolean);
+  return parts.length > 0 ? parts.join(" · ") : null;
+}

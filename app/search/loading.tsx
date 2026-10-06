@@ -2,10 +2,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SearchPageLoading() {
   return (
-    <main className="mx-auto max-w-2xl space-y-4 px-4 py-16">
-      <Skeleton className="h-8 w-1/2" />
-      <Skeleton className="h-20 w-full" />
-      <Skeleton className="h-20 w-full" />
+    <main className="mx-auto max-w-2xl px-6 py-16">
+      <p className="mb-8 text-center text-sm text-muted-foreground">Finding the best matches…</p>
+      <div className="space-y-3">
+        <Skeleton className="h-[72px] w-full rounded-2xl" />
+        <Skeleton className="h-[72px] w-full rounded-2xl" />
+      </div>
     </main>
   );
 }

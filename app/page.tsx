@@ -2,34 +2,41 @@ import Link from "next/link";
 import { SearchBar } from "@/components/search-bar";
 
 const EXAMPLES = [
-  "iPhone 17 Pro 256GB",
+  "iPhone 17 Pro",
   "Nike Air Max 90",
-  "Samsung Galaxy S26 Ultra",
-  "Levi's 511 jeans",
+  "Galaxy S26 Ultra",
+  "Levi's 511",
   "Sony WH-1000XM6",
 ];
 
 export default function HomePage() {
   return (
-    <main className="mx-auto flex min-h-[80vh] max-w-3xl flex-col items-center justify-center gap-8 px-4 text-center">
+    <main className="mx-auto flex min-h-[calc(100vh-8.5rem)] max-w-2xl flex-col items-center justify-center gap-10 px-6 text-center">
       <div className="space-y-3">
-        <p className="text-sm font-medium text-muted-foreground">Search once. Compare everywhere.</p>
-        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          Find it. Compare it. Flex the best deal.
+        <h1 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          Shop smarter.
         </h1>
+        <p className="text-base text-muted-foreground sm:text-lg">
+          Compare prices. Know what buyers think. Make the right call.
+        </p>
       </div>
+
       <SearchBar />
-      <div className="flex flex-wrap justify-center gap-2 text-sm">
-        {EXAMPLES.map((example) => (
-          <Link
-            key={example}
-            href={`/search?q=${encodeURIComponent(example)}`}
-            className="rounded-full border px-3 py-1 text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-          >
-            {example}
-          </Link>
+
+      <p className="text-sm text-muted-foreground">
+        Try:{" "}
+        {EXAMPLES.map((example, index) => (
+          <span key={example}>
+            <Link
+              href={`/search?q=${encodeURIComponent(example)}`}
+              className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              {example}
+            </Link>
+            {index < EXAMPLES.length - 1 && <span className="px-1.5 text-border">·</span>}
+          </span>
         ))}
-      </div>
+      </p>
     </main>
   );
 }

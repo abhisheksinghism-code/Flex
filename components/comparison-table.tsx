@@ -1,12 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+import { ArrowUpRight } from "lucide-react";
 import { formatInr, MERCHANT_DISPLAY_NAMES, MERCHANT_ORDER } from "@/lib/core/format";
 import type { MerchantId } from "@/lib/core/types";
 
@@ -25,68 +17,52 @@ export function ComparisonTable({ listings }: { listings: ComparisonListing[] })
   const lowestPrice = inStockPrices.length > 0 ? Math.min(...inStockPrices) : null;
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Platform</TableHead>
-          <TableHead className="text-right">Price</TableHead>
-          <TableHead className="text-right">Rating</TableHead>
-          <TableHead className="text-right">Reviews</TableHead>
-          <TableHead>Availability</TableHead>
-          <TableHead className="text-right">Action</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {MERCHANT_ORDER.map((merchant) => {
-          const listing = byMerchant.get(merchant);
-          const isLowest = !!listing && listing.inStock && listing.priceInPaise === lowestPrice;
+    <ul className="divide-y divide-border">
+      {MERCHANT_ORDER.map((merchant) => {
+        const listing = byMerchant.get(merchant);
+        const isLowest = !!listing && listing.inStock && listing.priceInPaise === lowestPrice;
 
+        if (!listing) {
           return (
-            <TableRow key={merchant}>
-              <TableCell className="font-medium">{MERCHANT_DISPLAY_NAMES[merchant]}</TableCell>
-              <TableCell className="text-right">
-                {listing ? (
-                  <span className="inline-flex items-center gap-2">
-                    <span className={isLowest ? "font-semibold text-emerald-600 dark:text-emerald-400" : ""}>
-                      {formatInr(listing.priceInPaise)}
-                    </span>
-                    {isLowest && <Badge variant="secondary">Best Price</Badge>}
-                  </span>
-                ) : (
-                  <span className="text-muted-foreground">—</span>
-                )}
-              </TableCell>
-              <TableCell className="text-right">
-                {listing ? `${listing.rating.toFixed(1)}/5` : <span className="text-muted-foreground">—</span>}
-              </TableCell>
-              <TableCell className="text-right">
-                {listing ? listing.reviewCount.toLocaleString("en-IN") : <span className="text-muted-foreground">—</span>}
-              </TableCell>
-              <TableCell>
-                {listing ? (
-                  listing.inStock ? "In Stock" : "Out of Stock"
-                ) : (
-                  <span className="text-muted-foreground">Not Available</span>
-                )}
-              </TableCell>
-              <TableCell className="text-right">
-                {listing ? (
-                  <a
-                    href={listing.redirectUrl}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
-                  >
-                    View Deal
-                  </a>
-                ) : (
-                  <span className="text-muted-foreground">—</span>
-                )}
-              </TableCell>
-            </TableRow>
+            <li key={merchant} className="flex items-center justify-between py-5">
+              <span className="font-medium text-muted-foreground">
+                {MERCHANT_DISPLAY_NAMES[merchant]}
+              </span>
+              <span className="text-sm text-muted-foreground">Not available</span>
+            </li>
           );
-        })}
-      </TableBody>
-    </Table>
+        }
+
+        return (
+          <li key={merchant} className="flex items-center justify-between gap-4 py-5">
+            <div className="flex items-baseline gap-2.5">
+              <span className="font-medium">{MERCHANT_DISPLAY_NAMES[merchant]}</span>
+              {isLowest && (
+                <span className="text-xs font-medium text-primary">Best price</span>
+              )}
+            </div>
+            <div className="flex items-center gap-5">
+              <div className="text-right">
+                <p className={isLowest ? "font-semibold text-primary" : "font-medium"}>
+                  {listing.inStock ? formatInr(listing.priceInPaise) : "Out of stock"}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  ★ {listing.rating.toFixed(1)} · {listing.reviewCount.toLocaleString("en-IN")}
+                </p>
+              </div>
+              <a
+                href={listing.redirectUrl}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="group flex shrink-0 items-center gap-1 text-sm font-medium text-foreground transition-colors hover:text-primary"
+              >
+                View deal
+                <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

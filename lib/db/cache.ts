@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db/client";
 import type { Merchant } from "@/lib/generated/prisma/client";
 import type { MatchedVariantGroup, MerchantId, ReviewSummary } from "@/lib/core/types";
+import { buildVariantLabel } from "@/lib/core/format";
 
 // Price/rating snapshots are reused within this window instead of being
 // recomputed on every request; the AI summary separately within its own
@@ -32,9 +33,14 @@ export interface CompareListingView {
 export interface CompareViewModel {
   slug: string;
   canonicalName: string;
+  productName: string;
+  variantLabel: string | null;
   listings: CompareListingView[];
   aiSummary: ReviewSummary;
   fromCache: boolean;
+  /** Merchants that failed to respond on this fetch. Only meaningful for a
+   * freshly computed view — a cache hit has no fresh provider-failure info. */
+  unavailableMerchants: MerchantId[];
 }
 
 /** Cache is an optimization, not a hard dependency — any DB error (including
@@ -76,6 +82,9 @@ export async function loadCachedCompareView(slug: string): Promise<CompareViewMo
   return {
     slug: variant.slug,
     canonicalName: variant.product.canonicalName,
+    productName: `${variant.product.brand} ${variant.product.model}`.trim(),
+    variantLabel: buildVariantLabel(variant.storageGb, variant.colorName, variant.sizeLabel),
+    unavailableMerchants: [],
     listings: variant.listings.map((listing) => ({
       merchant: ENUM_TO_MERCHANT[listing.merchant],
       priceInPaise: listing.priceSnapshots[0].priceInPaise,

@@ -2,8 +2,8 @@ export const metadata = { title: "Disclaimer | Flex" };
 
 export default function DisclaimerPage() {
   return (
-    <main className="mx-auto max-w-2xl space-y-4 px-4 py-16 text-sm leading-relaxed">
-      <h1 className="text-2xl font-semibold">Disclaimer</h1>
+    <main className="mx-auto max-w-2xl space-y-4 px-6 py-16 text-sm leading-relaxed">
+      <h1 className="text-2xl font-semibold tracking-tight">Disclaimer</h1>
       <p>
         Flex is currently running in demo mode. Product prices, ratings, review counts, and
         availability shown on this site are seeded sample data for demonstration purposes and do
