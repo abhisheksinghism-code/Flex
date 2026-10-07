@@ -8,7 +8,11 @@ export default function PrivacyPage() {
       <ul className="list-disc space-y-2 pl-5">
         <li>We don&apos;t require sign-up or login for basic product search.</li>
         <li>We store the text of your search query and the product it matched, with a timestamp — not your IP address or any other identifier.</li>
-        <li>We don&apos;t use tracking cookies or sell any data to third parties.</li>
+        <li>
+          We use Vercel Analytics to see aggregate traffic like page views — it&apos;s
+          cookieless and doesn&apos;t track you individually across sites. We don&apos;t use
+          advertising/tracking cookies, and we don&apos;t sell any data to third parties.
+        </li>
         <li>Clicking &ldquo;View Deal&rdquo; takes you to the merchant&apos;s own website, which has its own separate privacy policy.</li>
       </ul>
       <p>
