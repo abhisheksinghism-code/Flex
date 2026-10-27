@@ -34,14 +34,12 @@ export function ComparisonTable({ listings }: { listings: ComparisonListing[] })
         }
 
         return (
-          <li key={merchant} className="flex items-center justify-between gap-4 py-5">
+          <li key={merchant} className="flex items-center justify-between gap-3 py-3">
             <div className="flex items-baseline gap-2.5">
               <span className="font-medium">{MERCHANT_DISPLAY_NAMES[merchant]}</span>
-              {isLowest && (
-                <span className="text-xs font-medium text-primary">Best price</span>
-              )}
+              {isLowest && <span className="text-xs font-medium text-primary">Best price</span>}
             </div>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3 sm:gap-5">
               <div className="text-right">
                 <p className={isLowest ? "font-semibold text-primary" : "font-medium"}>
                   {listing.inStock ? formatInr(listing.priceInPaise) : "Out of stock"}
@@ -50,11 +48,14 @@ export function ComparisonTable({ listings }: { listings: ComparisonListing[] })
                   ★ {listing.rating.toFixed(1)} · {listing.reviewCount.toLocaleString("en-IN")}
                 </p>
               </div>
+              {/* h-11 keeps this a comfortable 44px touch target on phones —
+                  the negative margin keeps it visually aligned with the row. */}
               <a
                 href={listing.redirectUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="group flex shrink-0 items-center gap-1 text-sm font-medium text-foreground transition-colors hover:text-primary"
+                aria-label={`View deal for ${MERCHANT_DISPLAY_NAMES[merchant]} (opens in a new tab)`}
+                className="group -mr-2 flex h-11 shrink-0 items-center gap-1 rounded-xl px-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 View deal
                 <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
