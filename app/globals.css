@@ -88,24 +88,30 @@
 }
 
 .dark {
-  --background: oklch(0.16 0.004 285);
-  --foreground: oklch(0.96 0.003 80);
-  --card: oklch(0.205 0.004 285);
-  --card-foreground: oklch(0.96 0.003 80);
-  --popover: oklch(0.205 0.004 285);
-  --popover-foreground: oklch(0.96 0.003 80);
-  --primary: oklch(0.72 0.16 262);
-  --primary-foreground: oklch(0.16 0.004 285);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.96 0.003 80);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.96 0.003 80);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* Same design language inverted: a slightly blue-tinted near-black rather
+     than pure black, one cobalt accent lightened for contrast on dark, and
+     neutrals carrying the same subtle tint as the background so nothing
+     reads as a flat grey patch. Cards sit slightly above the page because
+     shadows are nearly invisible on dark surfaces. */
+  --background: oklch(0.165 0.005 285);
+  --foreground: oklch(0.96 0.003 285);
+  --card: oklch(0.205 0.006 285);
+  --card-foreground: oklch(0.96 0.003 285);
+  --popover: oklch(0.205 0.006 285);
+  --popover-foreground: oklch(0.96 0.003 285);
+  --primary: oklch(0.7 0.15 262);
+  --primary-foreground: oklch(0.165 0.005 285);
+  --secondary: oklch(0.26 0.006 285);
+  --secondary-foreground: oklch(0.96 0.003 285);
+  --muted: oklch(0.26 0.006 285);
+  --muted-foreground: oklch(0.72 0.012 285);
+  --accent: oklch(0.26 0.006 285);
+  --accent-foreground: oklch(0.96 0.003 285);
+  --destructive: oklch(0.7 0.19 22);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  /* Accent-tinted focus ring, matching how light mode treats focus. */
+  --ring: oklch(0.7 0.15 262 / 50%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
